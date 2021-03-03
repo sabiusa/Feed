@@ -25,6 +25,21 @@ public final class LocalFeedLoader {
         self.currentDate = currentDate
     }
     
+    private func isValid(_ timestamp: Date) -> Bool {
+        guard let maxCacheAge = calendar.date(
+                byAdding: .day,
+                value: maxCacheAgeInDays,
+                to: timestamp
+        ) else {
+            return false
+        }
+        
+        return currentDate() < maxCacheAge
+    }
+}
+ 
+extension LocalFeedLoader {
+    
     public func save(_ feed: [FeedImage], completion: @escaping (SaveResult) -> Void) {
         store.deleteCachedFeed { [weak self] deletionError in
             guard let self = self else { return }
@@ -35,47 +50,6 @@ public final class LocalFeedLoader {
                 self.cache(feed, with: completion)
             }
         }
-    }
-    
-    public func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case let .failure(error):
-                completion(.failure(error))
-            case let .found(feed, timestamp) where self.isValid(timestamp):
-                completion(.success(feed.toModels()))
-            case .found, .empty:
-                completion(.success([]))
-            }
-        }
-    }
-    
-    public func validateCache() {
-        store.retrieve { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .failure:
-                self.store.deleteCachedFeed { _ in }
-            case let .found(_, timestamp) where !self.isValid(timestamp):
-                self.store.deleteCachedFeed { _ in }
-            case .found, .empty:
-                break
-            }
-        }
-    }
-    
-    private func isValid(_ timestamp: Date) -> Bool {
-        guard let maxCacheAge = calendar.date(
-                byAdding: .day,
-                value: maxCacheAgeInDays,
-                to: timestamp
-        ) else {
-            return false
-        }
-        return currentDate() < maxCacheAge
     }
     
     private func cache(
@@ -91,6 +65,42 @@ public final class LocalFeedLoader {
                 completion(insertionError)
             }
         )
+    }
+}
+
+extension LocalFeedLoader {
+    
+    public func load(completion: @escaping (LoadResult) -> Void) {
+        store.retrieve { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case let .found(feed, timestamp) where self.isValid(timestamp):
+                completion(.success(feed.toModels()))
+            case .found, .empty:
+                completion(.success([]))
+            }
+        }
+    }
+}
+
+extension LocalFeedLoader {
+    
+    public func validateCache() {
+        store.retrieve { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .failure:
+                self.store.deleteCachedFeed { _ in }
+            case let .found(_, timestamp) where !self.isValid(timestamp):
+                self.store.deleteCachedFeed { _ in }
+            case .found, .empty:
+                break
+            }
+        }
     }
 }
 
