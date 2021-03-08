@@ -24,3 +24,20 @@ class ManagedFeedImage: NSManagedObject {
         )
     }
 }
+
+extension ManagedFeedImage {
+    
+    static func cacheFeed(
+        from local: [LocalFeedImage],
+        in context: NSManagedObjectContext
+    ) -> NSOrderedSet {
+        return NSOrderedSet(array: local.map {
+            let managed = ManagedFeedImage(context: context)
+            managed.id = $0.id
+            managed.imageDescription = $0.description
+            managed.location = $0.location
+            managed.url = $0.url
+            return managed
+        })
+    }
+}

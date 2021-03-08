@@ -44,17 +44,7 @@ public class CoreDataFeedStore: FeedStore {
         context.perform { [context] in
             let cache = ManagedCache(context: context)
             cache.timestamp = timestamp
-            
-            let images: [ManagedFeedImage] = feed.map {
-                let image = ManagedFeedImage(context: context)
-                image.id = $0.id
-                image.imageDescription = $0.description
-                image.location = $0.location
-                image.url = $0.url
-                return image
-            }
-            
-            cache.feed = NSOrderedSet(array: images)
+            cache.feed = ManagedFeedImage.cacheFeed(from: feed, in: context)
             do {
                 try context.save()
                 completion(nil)
