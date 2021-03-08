@@ -25,7 +25,7 @@ extension ManagedCache {
         case missingEntityName
     }
     
-    static func fetch(in context: NSManagedObjectContext) throws -> ManagedCache? {
+    static func find(in context: NSManagedObjectContext) throws -> ManagedCache? {
         guard let name = ManagedCache.entity().name else {
             throw Error.missingEntityName
         }
@@ -38,7 +38,7 @@ extension ManagedCache {
     static func newUniqueInstance(
         in context: NSManagedObjectContext
     ) throws -> ManagedCache {
-        try fetch(in: context).map(context.delete)
+        try find(in: context).map(context.delete)
         return ManagedCache(context: context)
     }
 }
