@@ -42,10 +42,11 @@ public class CoreDataFeedStore: FeedStore {
         completion: @escaping InsertionCompletion
     ) {
         context.perform { [context] in
-            let cache = ManagedCache(context: context)
-            cache.timestamp = timestamp
-            cache.feed = ManagedFeedImage.cacheFeed(from: feed, in: context)
             do {
+                let cache = try ManagedCache.newUniqueInstance(in: context)
+                cache.timestamp = timestamp
+                cache.feed = ManagedFeedImage.cacheFeed(from: feed, in: context)
+                
                 try context.save()
                 completion(nil)
             } catch {

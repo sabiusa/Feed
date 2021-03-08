@@ -34,4 +34,11 @@ extension ManagedCache {
         request.returnsObjectsAsFaults = false
         return try context.fetch(request).first
     }
+    
+    static func newUniqueInstance(
+        in context: NSManagedObjectContext
+    ) throws -> ManagedCache {
+        try fetch(in: context).map(context.delete)
+        return ManagedCache(context: context)
+    }
 }
