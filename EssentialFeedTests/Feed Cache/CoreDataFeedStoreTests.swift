@@ -186,11 +186,20 @@ extension CoreDataFeedStoreTests: FailableDeleteFeedStoreSpecs {
         
         insert((feed.local, timestamp), to: sut)
         
-        simulateDeleteFailure()
-        deleteCache(from: sut)
-        stopSimulatingDeleteFailure()
+        failToDeleteCache(in: sut)
         
         expect(sut, toRetrieve: .found(feed: feed.local, timestamp: timestamp))
+    }
+    
+    private func failToDeleteCache(
+        in sut: FeedStore,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        simulateDeleteFailure()
+        let error = deleteCache(from: sut)
+        XCTAssertNotNil(error, "Expected deletion to fail", file: file, line: line)
+        stopSimulatingDeleteFailure()
     }
     
     private func simulateDeleteFailure() {
