@@ -8,41 +8,6 @@
 import XCTest
 import EssentialFeed
 
-class RuntimeFeedStore: FeedStore {
-    
-    private struct Cache {
-        let feed: [LocalFeedImage]
-        let timestamp: Date
-    }
-    
-    private var cache: Cache?
-    private let queue = DispatchQueue(label: "\(RuntimeFeedStore.self)Queue", qos: .userInitiated, attributes: .concurrent)
-    
-    func retrieve(completion: @escaping RetrievalCompletion) {
-        queue.async { [self] in
-            guard let cache = cache, !cache.feed.isEmpty else {
-                return completion(.empty)
-            }
-            
-            completion(.found(feed: cache.feed, timestamp: cache.timestamp))
-        }
-    }
-    
-    func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
-        queue.async(flags: .barrier) { [self] in
-            cache = Cache(feed: feed, timestamp: timestamp)
-            completion(nil)
-        }
-    }
-    
-    func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        queue.async(flags: .barrier) { [self] in
-            cache = nil
-            completion(nil)
-        }
-    }
-}
-
 class RuntimeFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
