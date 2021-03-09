@@ -33,12 +33,7 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
         let sutToLoad = makeSUT()
         let feed = uniqueImageFeed().models
         
-        let saveExp = expectation(description: "Wait for save completion")
-        sutToSave.save(feed) { error in
-            XCTAssertNil(error, "Expected to save successfully")
-            saveExp.fulfill()
-        }
-        wait(for: [saveExp], timeout: 1.0)
+        save(feed, with: sutToSave)
         
         expect(sutToLoad, toLoad: feed)
     }
@@ -50,19 +45,8 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
         let firstFeed = uniqueImageFeed().models
         let latestFeed = uniqueImageFeed().models
         
-        let saveExp1 = expectation(description: "Wait for save completion")
-        sutToPerformFirstSave.save(firstFeed) { error in
-            XCTAssertNil(error, "Expected to save successfully")
-            saveExp1.fulfill()
-        }
-        wait(for: [saveExp1], timeout: 1.0)
-        
-        let saveExp2 = expectation(description: "Wait for save completion")
-        sutToPerformLastSave.save(latestFeed) { error in
-            XCTAssertNil(error, "Expected to save successfully")
-            saveExp2.fulfill()
-        }
-        wait(for: [saveExp2], timeout: 1.0)
+        save(firstFeed, with: sutToPerformFirstSave)
+        save(latestFeed, with: sutToPerformLastSave)
         
         expect(sutToLoad, toLoad: latestFeed)
     }
@@ -79,6 +63,20 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
         trackMemoryLeaks(store, file: file, line: line)
         trackMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func save(
+        _ feed: [FeedImage],
+        with sut: LocalFeedLoader,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let exp = expectation(description: "Wait for save completion")
+        sut.save(feed) { error in
+            XCTAssertNil(error, "Expected to save successfully", file: file, line: line)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
     }
     
     private func expect(
