@@ -108,7 +108,13 @@ extension CoreDataFeedStoreTests: FailableRetrieveFeedStoreSpecs {
     }
     
     func test_retrieve_hasNoSideEffectsOnFailure() {
+        let sut = makeSUT()
         
+        simulateFetchFailure()
+        
+        assertThatRetrieveHasNoSideEffectsOnFailure(on: sut)
+        
+        stopSimulatingFetchFailure()
     }
     
     private func simulateFetchFailure() {
