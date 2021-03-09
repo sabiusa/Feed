@@ -94,3 +94,64 @@ class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
         return sut
     }
 }
+
+extension CoreDataFeedStoreTests: FailableRetrieveFeedStoreSpecs {
+    
+    func test_retrieve_deliversFailureOnRetrievalError() {
+        let sut = makeSUT()
+        
+        simulateFetchFailure()
+        
+        assertThatRetrieveDeliversFailureOnRetrievalError(on: sut)
+        
+        stopSimulatingFetchFailure()
+    }
+    
+    func test_retrieve_hasNoSideEffectsOnFailure() {
+        
+    }
+    
+    private func simulateFetchFailure() {
+        Swizzler.exchangeFetchImplementations()
+    }
+    
+    private func stopSimulatingFetchFailure() {
+        Swizzler.exchangeFetchImplementations()
+    }
+}
+
+private extension CoreDataFeedStoreTests {
+    
+    class Swizzler {
+        static func exchangeFetchImplementations() {
+            exchangeImplementations(
+                of: NSManagedObjectContext.self, method1: #selector(NSManagedObjectContext.fetch),
+                to: Swizzler.self, method2: #selector(fetch)
+            )
+        }
+        
+        private static func exchangeImplementations(
+            of class1: AnyClass, method1: Selector,
+            to class2: AnyClass, method2: Selector
+        ) {
+            let originalMethod = class_getInstanceMethod(class1, method1)
+            let swizzledMethod = class_getInstanceMethod(class2, method2)
+            
+            method_exchangeImplementations(originalMethod!, swizzledMethod!)
+        }
+        
+        @objc
+        private func fetch(_ request: NSFetchRequest<NSFetchRequestResult>) throws -> [Any] {
+            throw anyNSError()
+        }
+        
+        @objc
+        private func save() throws {
+            throw anyNSError()
+        }
+        
+        private func anyNSError() -> NSError {
+            return NSError(domain: "any error", code: 0)
+        }
+    }
+}
