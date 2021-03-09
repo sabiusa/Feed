@@ -157,6 +157,31 @@ extension CoreDataFeedStoreTests: FailableInsertFeedStoreSpecs {
     }
 }
 
+extension CoreDataFeedStoreTests: FailableDeleteFeedStoreSpecs {
+    
+    func test_delete_deliversErrorOnDeletionError() {
+        let sut = makeSUT()
+        
+        simulateDeleteFailure()
+        
+        assertThatDeleteDeliversErrorOnDeletionError(on: sut)
+        
+        stopSimulatingDeleteFailure()
+    }
+    
+    func test_delete_hasNoSideEffectsOnDeletionError() {
+        
+    }
+    
+    private func simulateDeleteFailure() {
+        Swizzler.exchangeSaveImplementations()
+    }
+    
+    private func stopSimulatingDeleteFailure() {
+        Swizzler.exchangeSaveImplementations()
+    }
+}
+
 private extension CoreDataFeedStoreTests {
     
     class Swizzler {
