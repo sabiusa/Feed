@@ -51,15 +51,28 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
         expect(sutToLoad, toLoad: latestFeed)
     }
     
+    func test_validate_clearsExpiredCache() {
+        let sutToSave = makeSUT { Date().minusFeedCacheMaxAge().adding(seconds: -1) }
+        let sutToValidate = makeSUT()
+        let sutToLoad = makeSUT()
+        let feed = uniqueImageFeed().models
+        
+        save(feed, with: sutToSave)
+        sutToValidate.validateCache()
+        
+        expect(sutToLoad, toLoad: [])
+    }
+    
     // MARK:- Helpers
     
     private func makeSUT(
+        currentDate: @escaping () -> Date = Date.init,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> LocalFeedLoader {
         let storeURL = testSpecificStoreURL()
         let store = try! CoreDataFeedStore(storeURL: storeURL)
-        let sut = LocalFeedLoader(store: store, currentDate: Date.init)
+        let sut = LocalFeedLoader(store: store, currentDate: currentDate)
         trackMemoryLeaks(store, file: file, line: line)
         trackMemoryLeaks(sut, file: file, line: line)
         return sut
