@@ -70,6 +70,35 @@ public class CoreDataFeedStore: FeedStore {
     }
 }
 
+/// Subclass of `NSPersistentContainer` can use simpler `init` API
+/// as it looks for the type's bundle to look for the `NSManagedObjectModel`
+/// CoreData best practises - https://developer.apple.com/videos/play/wwdc2018/224/
+private class FeedStorePersistentContainer: NSPersistentContainer {
+    
+    enum LoadError: Error {
+        case storesFailedToLoaded(Error)
+    }
+    
+    static func load(
+        modelName: String,
+        storeURL: URL
+    ) throws -> FeedStorePersistentContainer {
+        let description = NSPersistentStoreDescription(url: storeURL)
+        let container = FeedStorePersistentContainer(name: modelName)
+        container.persistentStoreDescriptions = [description]
+        
+        var loadError: Error?
+        container.loadPersistentStores { desc, error in
+            loadError = error
+        }
+        if let error = loadError {
+            throw LoadError.storesFailedToLoaded(error)
+        }
+        
+        return container
+    }
+}
+
 private extension NSPersistentContainer {
     
     enum LoadError: Error {
