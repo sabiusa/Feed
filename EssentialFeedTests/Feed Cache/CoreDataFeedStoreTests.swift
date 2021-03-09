@@ -139,7 +139,13 @@ extension CoreDataFeedStoreTests: FailableInsertFeedStoreSpecs {
     }
     
     func test_insert_hasNoSideEffectsOnInsertionError() {
+        let sut = makeSUT()
         
+        simulateSaveFailure()
+        
+        assertThatInsertHasNoSideEffectsOnInsertionError(on: sut)
+        
+        stopSimulatingSaveFailure()
     }
     
     private func simulateSaveFailure() {
