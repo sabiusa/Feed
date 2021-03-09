@@ -184,7 +184,8 @@ extension CoreDataFeedStoreTests: FailableDeleteFeedStoreSpecs {
         let feed = uniqueImageFeed()
         let timestamp = Date()
         
-        insert((feed.local, timestamp), to: sut)
+        let error = insert((feed.local, timestamp), to: sut)
+        XCTAssertNil(error, "Expected insertion to succeed")
         
         failToDeleteCache(in: sut)
         
