@@ -179,6 +179,20 @@ extension CoreDataFeedStoreTests: FailableDeleteFeedStoreSpecs {
         stopSimulatingDeleteFailure()
     }
     
+    func test_delete_hasNoSideEffectsOnNonEmptyCacheOnDeletionError() {
+        let sut = makeSUT()
+        let feed = uniqueImageFeed()
+        let timestamp = Date()
+        
+        insert((feed.local, timestamp), to: sut)
+        
+        simulateDeleteFailure()
+        deleteCache(from: sut)
+        stopSimulatingDeleteFailure()
+        
+        expect(sut, toRetrieve: .found(feed: feed.local, timestamp: timestamp))
+    }
+    
     private func simulateDeleteFailure() {
         Swizzler.exchangeSaveImplementations()
     }
