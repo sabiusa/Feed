@@ -32,7 +32,9 @@ class RuntimeFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
+        let sut = RuntimeFeedStore()
         
+        assertThatRetrieveHasNoSideEffectsOnEmptyCache(on: sut)
     }
     
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
