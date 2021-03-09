@@ -126,13 +126,46 @@ extension CoreDataFeedStoreTests: FailableRetrieveFeedStoreSpecs {
     }
 }
 
+extension CoreDataFeedStoreTests: FailableInsertFeedStoreSpecs {
+    
+    func test_insert_deliversErrorOnInsertionError() {
+        let sut = makeSUT()
+        
+        simulateSaveFailure()
+        
+        assertThatInsertDeliversErrorOnInsertionError(on: sut)
+        
+        stopSimulatingSaveFailure()
+    }
+    
+    func test_insert_hasNoSideEffectsOnInsertionError() {
+        
+    }
+    
+    private func simulateSaveFailure() {
+        Swizzler.exchangeSaveImplementations()
+    }
+    
+    private func stopSimulatingSaveFailure() {
+        Swizzler.exchangeSaveImplementations()
+    }
+}
+
 private extension CoreDataFeedStoreTests {
     
     class Swizzler {
+        
         static func exchangeFetchImplementations() {
             exchangeImplementations(
                 of: NSManagedObjectContext.self, method1: #selector(NSManagedObjectContext.fetch),
                 to: Swizzler.self, method2: #selector(fetch)
+            )
+        }
+        
+        static func exchangeSaveImplementations() {
+            exchangeImplementations(
+                of: NSManagedObjectContext.self, method1: #selector(NSManagedObjectContext.save),
+                to: Swizzler.self, method2: #selector(save)
             )
         }
         
