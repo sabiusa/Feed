@@ -170,7 +170,13 @@ extension CoreDataFeedStoreTests: FailableDeleteFeedStoreSpecs {
     }
     
     func test_delete_hasNoSideEffectsOnDeletionError() {
+        let sut = makeSUT()
         
+        simulateDeleteFailure()
+        
+        assertThatDeleteHasNoSideEffectsOnDeletionError(on: sut)
+        
+        stopSimulatingDeleteFailure()
     }
     
     private func simulateDeleteFailure() {
