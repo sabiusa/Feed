@@ -31,6 +31,7 @@ class RuntimeFeedStore: FeedStore {
     }
     
     func deleteCachedFeed(completion: @escaping DeletionCompletion) {
+        cache = nil
         completion(nil)
     }
 }
@@ -98,7 +99,9 @@ class RuntimeFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     func test_delete_emptiesPreviouslyInsertedCache() {
+        let sut = makeSUT()
         
+        assertThatDeleteEmptiesPreviouslyInsertedCache(on: sut)
     }
     
     func test_storeSideEffects_runSerially() {
