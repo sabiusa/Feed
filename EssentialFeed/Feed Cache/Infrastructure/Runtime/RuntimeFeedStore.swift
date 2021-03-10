@@ -52,18 +52,15 @@ public final class RuntimeFeedStore: FeedStore {
     }
     
     private static var cache: Cache?
-    private let queue = DispatchQueue(label: "\(RuntimeFeedStore.self)Queue", qos: .userInitiated, attributes: .concurrent)
     
     public init() {}
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        queue.async {
-            guard let cache = RuntimeFeedStore.cache, !cache.feed.isEmpty else {
-                return completion(.empty)
-            }
-            
-            completion(.found(feed: cache.feed, timestamp: cache.timestamp))
+        guard let cache = RuntimeFeedStore.cache, !cache.feed.isEmpty else {
+            return completion(.empty)
         }
+        
+        completion(.found(feed: cache.feed, timestamp: cache.timestamp))
     }
     
     public func insert(
@@ -71,16 +68,12 @@ public final class RuntimeFeedStore: FeedStore {
         timestamp: Date,
         completion: @escaping InsertionCompletion
     ) {
-        queue.async(flags: .barrier) {
-            RuntimeFeedStore.cache = Cache(feed: feed, timestamp: timestamp)
-            completion(nil)
-        }
+        RuntimeFeedStore.cache = Cache(feed: feed, timestamp: timestamp)
+        completion(nil)
     }
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        queue.async(flags: .barrier) {
-            RuntimeFeedStore.cache = nil
-            completion(nil)
-        }
+        RuntimeFeedStore.cache = nil
+        completion(nil)
     }
 }
