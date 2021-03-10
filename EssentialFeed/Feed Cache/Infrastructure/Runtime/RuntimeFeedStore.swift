@@ -16,7 +16,7 @@ public final class ConcurrentFeedStoreDecorator: FeedStore {
         attributes: .concurrent
     )
     
-    init(store: FeedStore) {
+    public init(store: FeedStore) {
         decoratee = store
     }
     
