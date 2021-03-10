@@ -69,11 +69,11 @@ public final class RuntimeFeedStore: FeedStore {
         completion: @escaping InsertionCompletion
     ) {
         RuntimeFeedStore.cache = Cache(feed: feed, timestamp: timestamp)
-        completion(nil)
+        completion(.success(()))
     }
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
         RuntimeFeedStore.cache = nil
-        completion(nil)
+        completion(.success(()))
     }
 }

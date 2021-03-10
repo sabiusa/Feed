@@ -48,10 +48,10 @@ public final class CoreDataFeedStore: FeedStore {
                 cache.feed = ManagedFeedImage.cacheFeed(from: feed, in: context)
                 
                 try context.save()
-                completion(nil)
+                completion(.success(()))
             } catch {
                 context.rollback()
-                completion(error)
+                completion(.failure(error))
             }
         }
     }
@@ -61,10 +61,10 @@ public final class CoreDataFeedStore: FeedStore {
             do {
                 try ManagedCache.find(in: context).map(context.delete)
                 try context.save()
-                completion(nil)
+                completion(.success(()))
             } catch {
                 context.rollback()
-                completion(error)
+                completion(.failure(error))
             }
         }
     }
