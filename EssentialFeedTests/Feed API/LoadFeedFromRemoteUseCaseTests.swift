@@ -196,14 +196,14 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        typealias Message = (url: URL, completion: (HTTPClientResult) -> Void)
+        typealias Message = (url: URL, completion: (HTTPClient.Result) -> Void)
         private var messages = [Message]()
         
         var requestedURLs: [URL] {
             return messages.map { $0.url }
         }
         
-        func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
+        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
             messages.append((url, completion))
         }
         
