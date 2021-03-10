@@ -7,6 +7,38 @@
 
 import Foundation
 
+public final class ConcurrentFeedStoreDecorator: FeedStore {
+    
+    private let decoratee: FeedStore
+    private let queue = DispatchQueue(
+        label: "\(ConcurrentFeedStoreDecorator.self)Queue",
+        qos: .userInitiated,
+        attributes: .concurrent
+    )
+    
+    init(store: FeedStore) {
+        decoratee = store
+    }
+    
+    public func retrieve(completion: @escaping RetrievalCompletion) {
+        queue.async { [decoratee] in
+            decoratee.retrieve(completion: completion)
+        }
+    }
+    
+    public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
+        queue.async(flags: .barrier) { [decoratee] in
+            decoratee.insert(feed, timestamp: timestamp, completion: completion)
+        }
+    }
+    
+    public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
+        queue.async(flags: .barrier) { [decoratee] in
+            decoratee.deleteCachedFeed(completion: completion)
+        }
+    }
+}
+
 public final class RuntimeFeedStore: FeedStore {
     
     private struct Cache {
