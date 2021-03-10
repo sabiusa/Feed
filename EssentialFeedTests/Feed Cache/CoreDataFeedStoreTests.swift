@@ -189,7 +189,7 @@ extension CoreDataFeedStoreTests: FailableDeleteFeedStoreSpecs {
         
         failToDeleteCache(in: sut)
         
-        expect(sut, toRetrieve: .success(.found(feed: feed.local, timestamp: timestamp)))
+        expect(sut, toRetrieve: .success(CachedFeed(feed: feed.local, timestamp: timestamp)))
     }
     
     private func failToDeleteCache(

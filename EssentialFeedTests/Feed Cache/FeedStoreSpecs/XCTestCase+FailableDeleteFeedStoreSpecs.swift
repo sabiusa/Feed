@@ -21,6 +21,6 @@ extension FailableDeleteFeedStoreSpecs where Self: XCTestCase {
         let deletionError = deleteCache(from: sut)
         XCTAssertNotNil(deletionError, "Expected cache deletion to fail", file: file, line: line)
         
-        expect(sut, toRetrieve: .success(.empty), file: file, line: line)
+        expect(sut, toRetrieve: .success(.none), file: file, line: line)
     }
 }

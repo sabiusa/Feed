@@ -57,10 +57,10 @@ public final class RuntimeFeedStore: FeedStore {
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
         guard let cache = RuntimeFeedStore.cache, !cache.feed.isEmpty else {
-            return completion(.success(.empty))
+            return completion(.success(.none))
         }
         
-        completion(.success(.found(feed: cache.feed, timestamp: cache.timestamp)))
+        completion(.success(CachedFeed(feed: cache.feed, timestamp: cache.timestamp)))
     }
     
     public func insert(
