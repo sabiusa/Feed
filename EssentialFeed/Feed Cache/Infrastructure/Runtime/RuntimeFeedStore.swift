@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class RuntimeFeedStore: FeedStore {
+public final class RuntimeFeedStore: FeedStore {
     
     private struct Cache {
         let feed: [LocalFeedImage]
