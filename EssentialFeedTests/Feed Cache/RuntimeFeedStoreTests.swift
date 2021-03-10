@@ -10,6 +10,18 @@ import EssentialFeed
 
 class RuntimeFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
+    override func setUp() {
+        super.setUp()
+        
+        setupEmptyStoreState()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        undoStoreSideEffects()
+    }
+    
     func test_retrieve_deliversEmptyOnEmptyCache() {
         let sut = makeSUT()
         
@@ -91,5 +103,18 @@ class RuntimeFeedStoreTests: XCTestCase, FeedStoreSpecs {
         let sut = RuntimeFeedStore()
         trackMemoryLeaks(sut)
         return sut
+    }
+    
+    private func setupEmptyStoreState() {
+        deleteStoreArtifacts()
+    }
+    
+    private func undoStoreSideEffects() {
+        deleteStoreArtifacts()
+    }
+    
+    private func deleteStoreArtifacts() {
+        let sut = RuntimeFeedStore()
+        sut.deleteCachedFeed { _ in }
     }
 }

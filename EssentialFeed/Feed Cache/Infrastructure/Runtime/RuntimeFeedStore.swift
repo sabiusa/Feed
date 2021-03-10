@@ -12,16 +12,21 @@ public class RuntimeFeedStore: FeedStore {
     private struct Cache {
         let feed: [LocalFeedImage]
         let timestamp: Date
+        
+        init(feed: [LocalFeedImage], timestamp: Date) {
+            self.feed = feed
+            self.timestamp = timestamp
+        }
     }
     
-    private var cache: Cache?
+    private static var cache: Cache?
     private let queue = DispatchQueue(label: "\(RuntimeFeedStore.self)Queue", qos: .userInitiated, attributes: .concurrent)
     
     public init() {}
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        queue.async { [self] in
-            guard let cache = cache, !cache.feed.isEmpty else {
+        queue.async {
+            guard let cache = RuntimeFeedStore.cache, !cache.feed.isEmpty else {
                 return completion(.empty)
             }
             
@@ -34,15 +39,15 @@ public class RuntimeFeedStore: FeedStore {
         timestamp: Date,
         completion: @escaping InsertionCompletion
     ) {
-        queue.async(flags: .barrier) { [self] in
-            cache = Cache(feed: feed, timestamp: timestamp)
+        queue.async(flags: .barrier) {
+            RuntimeFeedStore.cache = Cache(feed: feed, timestamp: timestamp)
             completion(nil)
         }
     }
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        queue.async(flags: .barrier) { [self] in
-            cache = nil
+        queue.async(flags: .barrier) {
+            RuntimeFeedStore.cache = nil
             completion(nil)
         }
     }
