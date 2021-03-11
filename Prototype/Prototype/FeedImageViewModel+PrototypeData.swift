@@ -8,6 +8,7 @@
 import Foundation
 
 extension FeedImageViewModel {
+    
     static var prototypeFeed: [FeedImageViewModel] {
         return [
             FeedImageViewModel(
