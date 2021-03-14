@@ -306,9 +306,7 @@
 			children = (
 				3E7B345E25FA6947003D1438 /* Info.plist */,
 				3E7B351C25FE8201003D1438 /* Feed Image Loader */,
-				3E7B34CC25FB4441003D1438 /* FeedViewController.swift */,
-				3E7B34D425FC78E4003D1438 /* FeedImageCell.swift */,
-				3E7B34DC25FCDDB9003D1438 /* UIView+Shimmering.swift */,
+				3E7B352925FE827A003D1438 /* Feed UI */,
 			);
 			path = EssentialFeediOS;
 			sourceTree = "<group>";
@@ -335,6 +333,32 @@
 				3E7B351D25FE821B003D1438 /* FeedImageDataModel.swift */,
 			);
 			path = "Feed Image Loader";
+			sourceTree = "<group>";
+		};
+		3E7B352925FE827A003D1438 /* Feed UI */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B352A25FE828B003D1438 /* Controllers */,
+				3E7B352B25FE82A9003D1438 /* Views */,
+			);
+			path = "Feed UI";
+			sourceTree = "<group>";
+		};
+		3E7B352A25FE828B003D1438 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B34CC25FB4441003D1438 /* FeedViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3E7B352B25FE82A9003D1438 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B34D425FC78E4003D1438 /* FeedImageCell.swift */,
+				3E7B34DC25FCDDB9003D1438 /* UIView+Shimmering.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		3EC51B4D25DD281E00AA2C06 = {
