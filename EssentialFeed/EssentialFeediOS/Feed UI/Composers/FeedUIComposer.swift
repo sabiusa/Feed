@@ -5,6 +5,7 @@
 //  Created by Saba Khutsishvili on 3/15/21.
 //
 
+import UIKit
 import EssentialFeed
 
 public final class FeedUIComposer {
@@ -31,7 +32,8 @@ public final class FeedUIComposer {
                 return FeedImageCellController(
                     viewModel: FeedImageViewModel(
                         model: model,
-                        imageLoader: loader
+                        imageLoader: loader,
+                        imageTransformer: UIImage.init
                     )
                 )
             }
