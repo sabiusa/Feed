@@ -255,8 +255,8 @@ final class FeedViewControllerTests: XCTestCase {
             feedLoader: loader,
             imageLoader: loader
         )
-        trackMemoryLeaks(loader)
-        trackMemoryLeaks(sut)
+        trackMemoryLeaks(loader, file: file, line: line)
+        trackMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
     }
     
