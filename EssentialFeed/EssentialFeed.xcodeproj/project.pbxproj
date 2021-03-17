@@ -369,7 +369,6 @@
 			isa = PBXGroup;
 			children = (
 				3E7B359F25FF2A87003D1438 /* Composers */,
-				3E7B3660260072BA003D1438 /* Models */,
 				3E7B352A25FE828B003D1438 /* Controllers */,
 				3E7B352B25FE82A9003D1438 /* Views */,
 			);
@@ -434,19 +433,12 @@
 			path = Composers;
 			sourceTree = "<group>";
 		};
-		3E7B3660260072BA003D1438 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				3E7B3661260072CB003D1438 /* FeedViewModel.swift */,
-				3E7B366D26007A71003D1438 /* FeedImageViewModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		3E7B369D2600FC93003D1438 /* Feed Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				3E7B369E2600FCA3003D1438 /* FeedPresenter.swift */,
+				3E7B3661260072CB003D1438 /* FeedViewModel.swift */,
+				3E7B366D26007A71003D1438 /* FeedImageViewModel.swift */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
