@@ -11,19 +11,7 @@ import EssentialFeed
 protocol FeedImageView {
     associatedtype Image
     
-    func display(_ model: FeedImageViewData<Image>)
-}
-
-struct FeedImageViewData<Image> {
-    let description: String?
-    let location: String?
-    let image: Image?
-    let isLoading: Bool
-    let shouldRetry: Bool
-    
-    var hasLocation: Bool {
-        return location != nil
-    }
+    func display(_ model: FeedImageViewModel<Image>)
 }
 
 final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
@@ -45,7 +33,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     
     func didStartLoadingImageData(for model: FeedImage) {
         view.display(
-            FeedImageViewData(
+            FeedImageViewModel(
                 description: model.description,
                 location: model.location,
                 image: nil,
@@ -61,7 +49,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
         }
         
         view.display(
-            FeedImageViewData(
+            FeedImageViewModel(
                 description: model.description,
                 location: model.location,
                 image: image,
@@ -73,7 +61,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     
     func didFinishLoadingImageData(with error: Swift.Error, for model: FeedImage) {
         view.display(
-            FeedImageViewData(
+            FeedImageViewModel(
                 description: model.description,
                 location: model.location,
                 image: nil,

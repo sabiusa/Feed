@@ -44,7 +44,7 @@ extension Weak: FeedLoadingView where T: FeedLoadingView {
 extension Weak: FeedImageView where T: FeedImageView, T.Image == UIImage {
     typealias Image = UIImage
     
-    func display(_ model: FeedImageViewData<Image>) {
+    func display(_ model: FeedImageViewModel<Image>) {
         object?.display(model)
     }
 }
