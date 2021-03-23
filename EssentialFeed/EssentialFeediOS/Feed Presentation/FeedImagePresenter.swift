@@ -8,61 +8,78 @@
 import Foundation
 import EssentialFeed
 
-final class FeedImagePresenter<Image> {
+protocol FeedImageView {
+    associatedtype Image
     
-    typealias Observer<T> = (T) -> Void
-    
-    private let model: FeedImage
-    private let imageLoader: FeedImageDataLoader
-    private var task: FeedImageDataLoaderTask?
-    
-    private let imageTransformer: (Data) -> Image?
-    
-    init(
-        model: FeedImage,
-        imageLoader: FeedImageDataLoader,
-        imageTransformer: @escaping (Data) -> Image?
-    ) {
-        self.model = model
-        self.imageLoader = imageLoader
-        self.imageTransformer = imageTransformer
-    }
-    
-    var description: String? {
-        return model.description
-    }
-    
-    var location: String? {
-        return model.location
-    }
+    func display(_ model: FeedImageViewData<Image>)
+}
+
+struct FeedImageViewData<Image> {
+    let description: String?
+    let location: String?
+    let image: Image?
+    let isLoading: Bool
+    let shouldRetry: Bool
     
     var hasLocation: Bool {
         return location != nil
     }
+}
+
+final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
     
-    var onImageLoad: Observer<Image>?
-    var onImageLoadingStateChange: Observer<Bool>?
-    var onShouldRetryImageLoadStateChange: Observer<Bool>?
-    
-    func loadImageData() {
-        onImageLoadingStateChange?(true)
-        onShouldRetryImageLoadStateChange?(false)
-        task = imageLoader.loadImageData(from: model.url) { [weak self] result in
-            self?.handle(result)
-        }
+    private enum Error: Swift.Error {
+        case invalidImageData
     }
     
-    private func handle(_ result: FeedImageDataLoader.Result) {
-        if let image = (try? result.get()).flatMap(imageTransformer) {
-            onImageLoad?(image)
-        } else {
-            onShouldRetryImageLoadStateChange?(true)
-        }
-        onImageLoadingStateChange?(false)
+    private let view: View
+    private let imageTransformer: (Data) -> Image?
+    
+    init(
+        view: View,
+        imageTransformer: @escaping (Data) -> Image?
+    ) {
+        self.view = view
+        self.imageTransformer = imageTransformer
     }
     
-    func cancelImageDataLoad() {
-        task?.cancel()
-        task = nil
+    func didStartLoadingImageData(for model: FeedImage) {
+        view.display(
+            FeedImageViewData(
+                description: model.description,
+                location: model.location,
+                image: nil,
+                isLoading: true,
+                shouldRetry: false
+            )
+        )
+    }
+    
+    func didFinishLoadingImageData(with data: Data, for model: FeedImage) {
+        guard let image = imageTransformer(data) else {
+            return didFinishLoadingImageData(with: Error.invalidImageData, for: model)
+        }
+        
+        view.display(
+            FeedImageViewData(
+                description: model.description,
+                location: model.location,
+                image: image,
+                isLoading: false,
+                shouldRetry: false
+            )
+        )
+    }
+    
+    func didFinishLoadingImageData(with error: Swift.Error, for model: FeedImage) {
+        view.display(
+            FeedImageViewData(
+                description: model.description,
+                location: model.location,
+                image: nil,
+                isLoading: false,
+                shouldRetry: true
+            )
+        )
     }
 }
