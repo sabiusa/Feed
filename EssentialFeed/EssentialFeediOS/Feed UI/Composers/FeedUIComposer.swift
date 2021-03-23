@@ -33,7 +33,7 @@ public final class FeedUIComposer {
         return { [weak controller] feed in
             controller?.tableModel = feed.map { model in
                 return FeedImageCellController(
-                    viewModel: FeedImageViewModel(
+                    viewModel: FeedImagePresenter(
                         model: model,
                         imageLoader: loader,
                         imageTransformer: UIImage.init
@@ -74,7 +74,7 @@ private final class FeedViewAdapter: FeedView {
     func display(_ viewModel: FeedViewModel) {
         controller?.tableModel = viewModel.feed.map { model in
             return FeedImageCellController(
-                viewModel: FeedImageViewModel(
+                viewModel: FeedImagePresenter(
                     model: model,
                     imageLoader: imageLoader,
                     imageTransformer: UIImage.init
