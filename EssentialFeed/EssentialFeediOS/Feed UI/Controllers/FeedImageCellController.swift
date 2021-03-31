@@ -51,11 +51,3 @@ final class FeedImageCellController: FeedImageView {
         cell = nil
     }
 }
-
-extension UITableView {
-    
-    func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
-        let identifier = String(describing: T.self)
-        return dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! T
-    }
-}

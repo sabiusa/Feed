@@ -77,6 +77,7 @@
 		3EC51BD825ED2B8C00AA2C06 /* CacheFeedUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC51BD725ED2B8C00AA2C06 /* CacheFeedUseCaseTests.swift */; };
 		77E070B52614B7E800ECD8F3 /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77E070B42614B7E800ECD8F3 /* Feed.storyboard */; };
 		77E070BC2614B88100ECD8F3 /* Feed.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E070BB2614B88100ECD8F3 /* Feed.xcassets */; };
+		77E070C82614C94500ECD8F3 /* UITableView+Dequeueing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E070C72614C94500ECD8F3 /* UITableView+Dequeueing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,6 +204,7 @@
 		3EC51BD725ED2B8C00AA2C06 /* CacheFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCaseTests.swift; sourceTree = "<group>"; };
 		77E070B42614B7E800ECD8F3 /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
 		77E070BB2614B88100ECD8F3 /* Feed.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Feed.xcassets; sourceTree = "<group>"; };
+		77E070C72614C94500ECD8F3 /* UITableView+Dequeueing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Dequeueing.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -395,6 +397,7 @@
 			children = (
 				3E7B34D425FC78E4003D1438 /* FeedImageCell.swift */,
 				3E7B34DC25FCDDB9003D1438 /* UIView+Shimmering.swift */,
+				77E070C72614C94500ECD8F3 /* UITableView+Dequeueing.swift */,
 				77E070B42614B7E800ECD8F3 /* Feed.storyboard */,
 				77E070BB2614B88100ECD8F3 /* Feed.xcassets */,
 			);
@@ -817,6 +820,7 @@
 				3E7B369F2600FCA3003D1438 /* FeedPresenter.swift in Sources */,
 				3E7B34DD25FCDDB9003D1438 /* UIView+Shimmering.swift in Sources */,
 				3E4E772E2609FC65003F7C00 /* FeedImageViewModel.swift in Sources */,
+				77E070C82614C94500ECD8F3 /* UITableView+Dequeueing.swift in Sources */,
 				3E7B351E25FE821C003D1438 /* FeedImageDataModel.swift in Sources */,
 				3E7B34CD25FB4441003D1438 /* FeedViewController.swift in Sources */,
 				3E4E754126020669003F7C00 /* FeedViewModel.swift in Sources */,
