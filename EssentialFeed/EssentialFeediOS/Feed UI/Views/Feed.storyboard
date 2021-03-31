@@ -108,13 +108,6 @@ Label</string>
                                         <constraint firstItem="uBB-LB-DAL" firstAttribute="leading" secondItem="8Hb-Yi-zJK" secondAttribute="leadingMargin" id="ubc-ab-wE8"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="descriptionLabel" destination="1go-kz-urX" id="Pop-3J-EB5"/>
-                                    <outlet property="feedImageContainer" destination="VKX-TQ-1mO" id="OmU-26-OBj"/>
-                                    <outlet property="feedImageView" destination="wzc-yS-Phr" id="3Xt-dE-TxK"/>
-                                    <outlet property="locationContainer" destination="24m-bc-g4C" id="clr-Go-LOW"/>
-                                    <outlet property="locationLabel" destination="Ef5-WA-rSL" id="2la-JK-Jmx"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -125,9 +118,6 @@ Label</string>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="LLJ-kw-nsQ">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <connections>
-                            <action selector="refresh" destination="a45-zG-419" eventType="valueChanged" id="Z08-uY-3SV"/>
-                        </connections>
                     </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mge-Xa-3DZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
