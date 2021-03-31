@@ -78,6 +78,9 @@ Label</string>
                                                             <state key="normal" title="🔄">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="retryButtonTapped" destination="Gqd-AG-0nk" eventType="touchUpInside" id="Mcc-US-z4V"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -119,6 +122,14 @@ Label</string>
                                         <constraint firstItem="uBB-LB-DAL" firstAttribute="leading" secondItem="8Hb-Yi-zJK" secondAttribute="leadingMargin" id="ubc-ab-wE8"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="1go-kz-urX" id="svW-Uq-sdv"/>
+                                    <outlet property="feedImageContainer" destination="VKX-TQ-1mO" id="5Ep-gv-om1"/>
+                                    <outlet property="feedImageRetryButton" destination="5UD-Jp-1Im" id="75W-fV-G9j"/>
+                                    <outlet property="feedImageView" destination="wzc-yS-Phr" id="M3J-UT-qUL"/>
+                                    <outlet property="locationContainer" destination="24m-bc-g4C" id="qMt-m5-Xpr"/>
+                                    <outlet property="locationLabel" destination="Ef5-WA-rSL" id="udw-jR-QPt"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
