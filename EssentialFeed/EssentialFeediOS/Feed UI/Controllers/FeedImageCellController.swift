@@ -23,10 +23,9 @@ final class FeedImageCellController: FeedImageView {
     }
     
     func view(in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedImageCell", for: indexPath) as! FeedImageCell
-        self.cell = cell
+        cell = tableView.dequeueReusableCell(for: indexPath)
         delegate.didRequestImage()
-        return cell
+        return cell!
     }
     
     func preload() {
@@ -50,5 +49,13 @@ final class FeedImageCellController: FeedImageView {
     
     private func releaseCellForReuse() {
         cell = nil
+    }
+}
+
+extension UITableView {
+    
+    func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
+        let identifier = String(describing: T.self)
+        return dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! T
     }
 }
