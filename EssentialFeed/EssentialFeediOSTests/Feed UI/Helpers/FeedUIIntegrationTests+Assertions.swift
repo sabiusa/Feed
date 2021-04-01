@@ -1,5 +1,5 @@
 //
-//  FeedViewControllerTests+Assertions.swift
+//  FeedUIIntegrationTests+Assertions.swift
 //  EssentialFeediOSTests
 //
 //  Created by Saba Khutsishvili on 3/14/21.
@@ -9,7 +9,7 @@ import XCTest
 import EssentialFeed
 import EssentialFeediOS
 
-extension FeedViewControllerTests {
+extension FeedUIIntegrationTests {
     
     func assertThat(
         _ sut: FeedViewController,
