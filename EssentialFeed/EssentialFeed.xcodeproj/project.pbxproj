@@ -79,6 +79,7 @@
 		77E070BC2614B88100ECD8F3 /* Feed.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E070BB2614B88100ECD8F3 /* Feed.xcassets */; };
 		77E070C82614C94500ECD8F3 /* UITableView+Dequeueing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E070C72614C94500ECD8F3 /* UITableView+Dequeueing.swift */; };
 		77E070D42614CA6500ECD8F3 /* UIImageView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E070D32614CA6500ECD8F3 /* UIImageView+Animations.swift */; };
+		77E070EF2615B5E900ECD8F3 /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77E070EE2615B5E900ECD8F3 /* Feed.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +208,7 @@
 		77E070BB2614B88100ECD8F3 /* Feed.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Feed.xcassets; sourceTree = "<group>"; };
 		77E070C72614C94500ECD8F3 /* UITableView+Dequeueing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Dequeueing.swift"; sourceTree = "<group>"; };
 		77E070D32614CA6500ECD8F3 /* UIImageView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Animations.swift"; sourceTree = "<group>"; };
+		77E070EE2615B5E900ECD8F3 /* Feed.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Feed.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,6 +456,7 @@
 				3E4E754026020669003F7C00 /* FeedViewModel.swift */,
 				3E4E754726020878003F7C00 /* FeedImagePresenter.swift */,
 				3E4E772D2609FC65003F7C00 /* FeedImageViewModel.swift */,
+				77E070EE2615B5E900ECD8F3 /* Feed.strings */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
@@ -771,6 +774,7 @@
 			files = (
 				77E070B52614B7E800ECD8F3 /* Feed.storyboard in Resources */,
 				77E070BC2614B88100ECD8F3 /* Feed.xcassets in Resources */,
+				77E070EF2615B5E900ECD8F3 /* Feed.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
